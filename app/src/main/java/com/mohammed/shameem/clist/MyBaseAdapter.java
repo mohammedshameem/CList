@@ -1,4 +1,5 @@
 package com.mohammed.shameem.clist;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,34 +8,36 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class MyBaseAdapter extends BaseAdapter {
 
-    ArrayList<ListData> myList = new ArrayList<ListData>();
+    ArrayList<Flower> flowerList = new ArrayList<Flower>();
     LayoutInflater inflater;
     Context context;
 
 
-    public MyBaseAdapter(Context context, ArrayList<ListData> myList) {
-        this.myList = myList;
+    public MyBaseAdapter(Context context, ArrayList<Flower> flowerList) {
+        this.flowerList = flowerList;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
     }
 
     @Override
     public int getCount() {
-        return myList.size();
+        return flowerList.size();
     }
 
     @Override
-    public ListData getItem(int position) {
-        return myList.get(position);
+    public Flower getItem(int position) {
+        return flowerList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,12 +52,12 @@ public class MyBaseAdapter extends BaseAdapter {
             mViewHolder = (MyViewHolder) convertView.getTag();
         }
 
-        ListData currentListData = getItem(position);
+        Flower flowerListData = getItem(position);
 
-        mViewHolder.tvTitle.setText(currentListData.getTitle());
-        mViewHolder.tvDesc.setText(currentListData.getDescription());
-        mViewHolder.ivIcon.setImageResource(currentListData.getImgResId());
-
+        mViewHolder.tvTitle.setText(flowerListData.getName());
+        mViewHolder.tvDesc.setText(flowerListData.getInstructions());
+        String imageURL = flowerListData.getPhoto();
+        Picasso.with(context).load(imageURL).into(mViewHolder.ivIcon); //Always viewholderConstructor.anyView
         return convertView;
     }
 

@@ -1,5 +1,7 @@
 package com.mohammed.shameem.clist;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
@@ -7,17 +9,27 @@ import java.io.Serializable;
  */
 
 public class Flower implements Serializable {
+
+    /**
+     * category : Shrubs
+     * price : 15.99
+     * instructions : Large double. Good grower, heavy bloomer. Early to mid-season, acid loving plants. Plant in moist well drained soil with pH of 4.0-5.5.
+     * photo : california_snow.jpg
+     * name : Azalea
+     * productId : 1
+     */
+    @Expose
     private String category;
-
-    private String price;
-
+    @Expose
+    private double price;
+    @Expose
     private String instructions;
-
-    private String name;
-
+    @Expose
     private String photo;
-
-    private String productId;
+    @Expose
+    private String name;
+    @Expose
+    private int productId;
 
     public String getCategory() {
         return category;
@@ -27,11 +39,11 @@ public class Flower implements Serializable {
         this.category = category;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -43,14 +55,6 @@ public class Flower implements Serializable {
         this.instructions = instructions;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPhoto() {
         return photo;
     }
@@ -59,17 +63,20 @@ public class Flower implements Serializable {
         this.photo = photo;
     }
 
-    public String getProductId() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
-    }
-
-    @Override
-    public String toString() {
-        return "ClassPojo [category = " + category + ", price = " + price + ", instructions = " + instructions + ", name = " + name + ", photo = " + photo + ", productId = " + productId + "]";
     }
 }
 

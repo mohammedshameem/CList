@@ -1,29 +1,31 @@
 package com.mohammed.shameem.clist;
+
 import android.app.Activity;
 import android.content.Context;
+
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
 import java.util.ArrayList;
 
+import cz.msebera.android.httpclient.Header;
+
 public class MainActivity extends Activity {
-
-    ListView lvDetail;
-    Context context = MainActivity.this;
-    ArrayList myList = new ArrayList();
-
-    String[] title = new String[]{
-            "Title 1", "Title 2", "Title 3", "Title 4",
-            "Title 5", "Title 6", "Title 7", "Title 8"
-    };
-    String[] desc = new String[]{
-            "Desc 1", "Desc 2", "Desc 3", "Desc 4",
-            "Desc 5", "Desc 6", "Desc 7", "Desc 8"
-    };
-    int[] img = new int[]{
-            R.drawable.star1, R.drawable.star1, R.drawable.star1, R.drawable.star1,
-            R.drawable.star1, R.drawable.star1, R.drawable.star1, R.drawable.star1
-    };
+    private ListView lvDetail;
+    private Context context = MainActivity.this;
+    private ArrayList myList = new ArrayList();
+    private static final String URL_TO_PARSE = "http://services.hanselandpetal.com/feeds/flowers.json";
+    private AsyncHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +35,58 @@ public class MainActivity extends Activity {
         lvDetail = (ListView) findViewById(R.id.lvCustomList);
         // insert data into the list before setting the adapter
         // otherwise it will generate NullPointerException  - Obviously
-        getDataInList();
-        lvDetail.setAdapter(new MyBaseAdapter(context, myList));
+        getDataFromJson();
+
+
     }
 
-    private void getDataInList() {
-        for (int i = 0; i <desc.length; i++) {
-            // Create a new object for each list item
-            ListData ld = new ListData();
-            ld.setTitle(title[i]);
-            ld.setDescription(desc[i]);
-            ld.setImgResId(img[i]);
-            // Add this object into the ArrayList myList
-            myList.add(ld);
-        }
+    private void getDataFromJson() {
+// Instantiate the RequestQueue.
+        client=new AsyncHttpClient();
+        client.get(context, URL_TO_PARSE, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response=new String(responseBody);
+                /*response=response.substring(3);
+                response=response.substring(0,response.length()-2);
+                */
+                Gson gson = new Gson();
+                Flower flower = gson.fromJson(response, Flower.class);
+                myList.add(flower);
+                lvDetail.setAdapter(new MyBaseAdapter(context, myList));
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+
+      /*  RequestQueue queue = Volley.newRequestQueue(this);
+        //String url = "http://www.google.com";
+// Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_TO_PARSE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        try {
+
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // mTextView.setText("That didn't work!");
+            }
+        });
+// Add the request to the RequestQueue.
+        queue.add(stringRequest);
+*/
     }
+
 
 }
