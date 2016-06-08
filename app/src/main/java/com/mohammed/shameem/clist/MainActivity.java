@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
                 response=response.substring(0,response.length()-2);
                 */
                 Gson gson = new Gson();
-                Flower flower = gson.fromJson(response, Flower.class);
+                Flower flower =  gson.fromJson(response, Flower.class);
                 myList.add(flower);
                 lvDetail.setAdapter(new MyBaseAdapter(context, myList));
 
