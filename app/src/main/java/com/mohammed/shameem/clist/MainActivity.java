@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
                 */
                 final GsonBuilder gsonBuilder = new GsonBuilder();
                 final Gson gson = gsonBuilder.create();
-
+// added from chttp://stackoverflow.com/questions/26472529/expected-begin-object-but-was-begin-array-at-line-1-column-2-path
                 Flower[] flower =  gson.fromJson(response, Flower[].class);
                 myList.add(flower);
                 lvDetail.setAdapter(new MyBaseAdapter(context, myList));
