@@ -1,6 +1,7 @@
 package com.mohammed.shameem.clist;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -18,17 +19,17 @@ public class Flower implements Serializable {
      * name : Azalea
      * productId : 1
      */
-    @Expose
+    @SerializedName("category")
     private String category;
-    @Expose
+    @SerializedName("price")
     private double price;
-    @Expose
+    @SerializedName("instructions")
     private String instructions;
-    @Expose
+    @SerializedName("photo")
     private String photo;
-    @Expose
+    @SerializedName("name")
     private String name;
-    @Expose
+    @SerializedName("productId")
     private int productId;
 
     public String getCategory() {

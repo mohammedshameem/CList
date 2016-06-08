@@ -13,6 +13,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -50,8 +51,10 @@ public class MainActivity extends Activity {
                 /*response=response.substring(3);
                 response=response.substring(0,response.length()-2);
                 */
-                Gson gson = new Gson();
-                Flower flower =  gson.fromJson(response, Flower.class);
+                final GsonBuilder gsonBuilder = new GsonBuilder();
+                final Gson gson = gsonBuilder.create();
+
+                Flower[] flower =  gson.fromJson(response, Flower[].class);
                 myList.add(flower);
                 lvDetail.setAdapter(new MyBaseAdapter(context, myList));
 
