@@ -76,6 +76,23 @@ public class MainActivity extends Activity {
                         Gson gson = new Gson();
                         try {
 
+
+                            JSONArray jsonarray = new JSONArray(response);
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String instructions = jsonobject.getString("instructions");
+                                String name = jsonobject.getString("name");
+                                String image= jsonobject.getString("photo");
+                                Flower flower=new Flower();
+                                flower.setInstructions(instructions);
+                                flower.setName(name);
+                                flower.setPhoto(image);
+                                myList.add(flower);
+
+
+                            }
+                            lvDetail.setAdapter(new MyBaseAdapter(context, myList));
+
                         } catch (Exception e) {
 
                         }
